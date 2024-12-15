@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title>Responsive Admin Dashboard</title>
+    <link rel="stylesheet" href="../../static/style_admin.css">
+    <link href="{{ url_for('static', filename='/img/log.png') }}" rel="icon">
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+<body>
+  <div class="sidebar">
+    <div class="logo-details">
+      <img class='logo' src="../../static/img/Logo_Clean_YED_1X1.png">
+      <span class="logo_name">Admin</span>
+    </div>
+      <ul class="nav-links">
+        <li>
+          <a href="/admindashboard" class="active">
+            <i class='bx bx-grid-alt' ></i>
+            <span class="links_name">Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <a href="/adminuser">
+            <i class='bx bx-box' ></i>
+            <span class="links_name">User</span>
+          </a>
+        </li>
+        <li>
+          <a href="/adminpekerja">
+            <i class='bx bx-list-ul' ></i>
+            <span class="links_name">Pekerja</span>
+          </a>
+        </li>
+      </ul>
+  </div>
+  <section class="home-section">
+    <nav>
+      <div class="sidebar-button">
+        <i class='bx bx-menu sidebarBtn'></i>
+        <span class="dashboard">Dashboard</span>
+      </div>
+      <div class="logout-button" style="float: right;">
+        <a href="{{ url_for('logout_admin') }}" class="btn btn-danger">Logout</a>
+      </div>
+      
+    </nav>
+
+    <div class="home-content">
+      <div class="overview-boxes">
+        <div class="box">
+          <div class="right-side">
+            <div class="box-topic">Jumlah Pesanan Masuk</div>
+            <div class="number">{{ total_orders }}</div>
+            <div class="indicator">
+              <i class='bx bx-up-arrow-alt'></i>
+              <span class="text">Up from yesterday</span>
+            </div>
+          </div>
+          <i class='bx bx-cart-alt cart'></i>
+        </div>
+        <div class="box">
+          <div class="right-side">
+            <div class="box-topic">Jumlah user</div>
+            <div class="number">{{ users }}</div>
+            <div class="indicator">
+              <i class='bx bx-up-arrow-alt'></i>
+              <span class="text">Up from yesterday</span>
+            </div>
+          </div>
+          <i class='bx bxs-cart-add cart two' ></i>
+        </div>
+        <div class="box">
+          <div class="right-side">
+            <div class="box-topic">Jumlah Pekerja </div>
+            <div class="number">{{ pekerja }}</div>
+            <div class="indicator">
+              <i class='bx bx-up-arrow-alt'></i>
+              <span class="text">Up from yesterday</span>
+            </div>
+          </div>
+          <i class='bx bx-cart cart three' ></i>
+        </div>
+      </div>
+      <div class="container">
+        <h2>Data Pesanan</h2>                                                                                    
+        <div class="table-responsive">          
+        <table class="table">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>ID User</th>
+              <th>Nama User</th>
+              <th>Pembayaran</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order in orders %}
+              <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ order[1] }}</td>
+                <td>{{ order[2] }}</td>
+                <td>{{ order[3] }}</td>
+                <td>{{ order[4] }}</td>
+                <td>
+                  <form action="{{ url_for('accept_order', order_id=order[0]) }}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-success">Accept</button>
+                  </form>
+                  <form action="{{ url_for('reject_order', order_id=order[0]) }}" method="post" style="display:inline;">
+                    <button type="submit" class="btn btn-danger">Reject</button>
+                  </form>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        </div>
+      </div>
+  </section>
+
+  <script>
+   let sidebar = document.querySelector(".sidebar");
+let sidebarBtn = document.querySelector(".sidebarBtn");
+sidebarBtn.onclick = function() {
+  sidebar.classList.toggle("active");
+  if(sidebar.classList.contains("active")){
+  sidebarBtn.classList.replace("bx-menu" ,"bx-menu-alt-right");
+}else
+  sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+}
+ </script>
+
+</body>
+</html>

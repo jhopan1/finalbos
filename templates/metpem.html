@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html class="head_metpem" lang="en" dir="ltr">
+   <head>
+      <meta charset="utf-8">
+      <title>Pembayaran</title>
+      <link href="{{ url_for('static', filename='/img/log.png') }}" rel="icon">
+      <link rel="stylesheet" href="../static/style.css">
+   </head>
+   <body class="body_metpem">
+      <div class="container_metpem">
+         <div class="wrapper">
+            <div class="card front-face">
+               <img src="../static/img/gopay.png">
+            </div>
+            <div class="card back-face">
+               <img src="../static/img/coba.png">
+            </div>
+         </div>
+         <div class="wrapper">
+           <div class="card front-face">
+              <img src="../static/img/danaa.png">
+           </div>
+           <div class="card back-face">
+              <img src="../static/img/coba.png">
+           </div>
+        </div><div class="wrapper">
+           <div class="card front-face">
+              <img src="../static/img/ovo.png">
+           </div>
+           <div class="card back-face">
+              <img src="../static/img/coba.png">
+           </div>
+        </div>
+      </div>
+      <div class="button_pembayaran">
+         <input type="submit" value="Formulir Pembayaran">
+      </div>
+      <form action="{{ url_for('submit_payment') }}" method="post">
+         <div class="body_pembayaran">
+            <div class="content">
+               <div class="user-details">
+                  <div class="input-box">
+                     <span class="details">Nama</span>
+                     <input type="text" name="name" placeholder="Masukkan Nama Anda" required>
+                  </div>
+                  <div class="input-box">
+                     <span class="details">Atas Nama E-Wallet</span>
+                     <input type="text" name="ewallet_name" placeholder="Masukkan Nama E-Wallet" required>
+                  </div>
+                  <div class="input-box">
+                     <span class="details">NO HP</span>
+                     <input type="text" name="phone" placeholder="Masukkan NO HP yang bisa dihubungi" required>
+                  </div>
+               </div>
+               <div class="gender-details">
+                  <input type="radio" name="service_type" id="dot-1" value="Ringan">
+                  <input type="radio" name="service_type" id="dot-2" value="Sedang">
+                  <input type="radio" name="service_type" id="dot-3" value="Berat">
+                  <span class="gender-title">Jenis Pelayanan</span>
+                  <div class="category">
+                     <label for="dot-1">
+                     <span class="dot one"></span>
+                     <span class="gender">Ringan</span>
+                   </label>
+                   <label for="dot-2">
+                     <span class="dot two"></span>
+                     <span class="gender">Sedang</span>
+                   </label>
+                   <label for="dot-3">
+                     <span class="dot three"></span>
+                     <span class="gender">Berat</span>
+                   </label>
+                  </div>
+               </div>
+               <div class="genders-details">
+                  <input type="radio" name="payment_method" id="dot-4" value="GOPAY">
+                  <input type="radio" name="payment_method" id="dot-5" value="DANA">
+                  <input type="radio" name="payment_method" id="dot-6" value="OVO">
+                  <span class="genders-title">Metode Pembayaran</span>
+                  <div class="category">
+                     <label for="dot-4">
+                     <span class="dot four"></span>
+                     <span class="genders">GOPAY</span>
+                   </label>
+                   <label for="dot-5">
+                     <span class="dot five"></span>
+                     <span class="genders">DANA</span>
+                   </label>
+                   <label for="dot-6">
+                     <span class="dot six"></span>
+                     <span class="genders">OVO</span>
+                   </label>
+                  </div>
+               </div>
+               <div class="button_pembayaran_bawah">
+                  <button class="open-popup" type="submit">Submit</button>
+               </div>
+            </div>
+         </div>
+      </form>
+      <div id="popup1" class="overlay_popup">
+         <div class="popup_popup">
+            <div class="foto_popup">
+               <img src="Logo  Verif.png" alt="">
+            </div>
+            <h2>Terimakasih, Pesanan anda sedang kami proses</h2>
+            <a class="close_popup" href="#">&times;</a>
+            <div class="content_popup">
+               <p>Jangan lupa untuk order kembali</p>
+            </div>
+            <div class="butjar">
+               <a class="button_buttonpopup" href="/home">Kembali ke Home</a>
+            </div>
+         </div>
+      </div>
+   </body>
+</html>

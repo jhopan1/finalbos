@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - codingnepalweb.com -->
+<html class="head_sedang" lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Kategori Pekerjaan</title>
+    <link href="{{ url_for('static', filename='/img/log.png') }}" rel="icon">
+    <link rel="stylesheet" href="../static/style.css" />
+  </head>
+  <body>
+    <header class="header_utama">
+        <nav class="navbar">
+          <div class="logo"><img class="logo" src="../static/img/Logo_Clean_YED_20X9.png" alt="logo"><a href=""></a></div>
+          <input type="checkbox" id="menu-toggler">
+          </label>
+          <ul class="all-links">
+            <li><a href="/home">Home</a></li>
+            <li><a href="#" id="contactLink">Contact</a></li>
+            <li><a href="/index">About Us</a></li>
+            <li><a href="/">Logout</a></li>
+        </nav>
+      </header>
+    <section class="about-us">
+      <div class="about">
+        <img src="../static/img/4.jpg" class="pic" />
+        <div class="text">
+          <h2>Clean Sedang</h2>
+          <h5>Apa saja yang didapatkan?</h5>
+          <p> - Pembersihan 4 Kamar Tidur </p>
+          <p> - Pembersihan 2 Unit AC </p>
+          <p> - Pembersihan 2 Toilet </p>
+          <p> - Pembersihan 1 set sofa </p>
+          <p> - 5 Pekerja </p>
+          <p> - Harga Rp. 200.000</p>
+          <div class="data">
+            <a href="/metpem" class="hire">Pesan</a>
+          </div>
+        </div>
+      </div>
+    </section>
+    <footer class="footer">
+      <div>
+        <span class="span_footer">CleanYED-Group</span>
+      </div>
+    </footer>
+    
+    <!-- Popup -->
+    <div id="popupC" class="overlay_popup2">
+      <div class="popup_popupC">
+        <div class="foto_popupC">
+          <img src="../static/img/wa.png" alt="Logo">
+        </div>
+        <h2>Contact Admin</h2>
+        <div class="content_popup">
+          <p>+62-813-4230-8395</p>
+       </div>
+        <a class="close_popupC" href="#" id="closePopup">&times;</a>
+        <div class="butjarC">
+          <a class="button_buttonpopupC" href="/home">Kembali</a>
+        </div>
+      </div>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Mendapatkan elemen popup dan tombol
+      var popup = document.getElementById('popupC');
+      var contactLink = document.getElementById('contactLink');
+      var closePopup = document.getElementById('closePopup');
+
+      // Menampilkan popup saat link "Contact" diklik
+      contactLink.onclick = function(event) {
+        event.preventDefault(); // Menghindari link untuk menavigasi
+        popup.style.display = 'flex'; // Menampilkan popup
+      };
+
+      // Menutup popup saat tombol close diklik
+      closePopup.onclick = function(event) {
+        event.preventDefault();
+        popup.style.display = 'none'; // Menyembunyikan popup
+      };
+
+      // Menutup popup jika klik di luar area popup
+      window.onclick = function(event) {
+        if (event.target === popup) {
+          popup.style.display = 'none';
+        }
+      };
+    });
+  </script>
+
+</body>
+</html>
+
+

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title>Dashboard Admin User</title>
+    <link href="{{ url_for('static', filename='/img/log.png') }}" rel="icon">
+    <link rel="stylesheet" href="../../static/style_admin.css">
+    <!-- Boxicons CDN Link -->
+    <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  </head>
+<body>
+  <div class="sidebar">
+    <div class="logo-details">
+      <img class='logo' src="../../static/img/Logo_Clean_YED_1X1.png">
+      <span class="logo_name">Admin</span>
+    </div>
+    <ul class="nav-links">
+      <li>
+        <a href="/admindashboard">
+          <i class='bx bx-grid-alt'></i>
+          <span class="links_name">Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a href="/adminuser" class="active">
+          <i class='bx bx-box'></i>
+          <span class="links_name">User</span>
+        </a>
+      </li>
+      <li>
+        <a href="/adminpekerja">
+          <i class='bx bx-list-ul'></i>
+          <span class="links_name">Pekerja</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <section class="home-section">
+    <nav>
+      <div class="sidebar-button">
+        <i class='bx bx-menu sidebarBtn'></i>
+        <span class="dashboard">User</span>
+      </div>
+      <div class="logout-button" style="float: right;">
+        <a href="{{ url_for('logout_admin') }}" class="btn btn-danger">Logout</a>
+      </div>
+    </nav>
+
+    <div class="home-content"></div>
+    <div class="container">
+      <h2>Data User</h2>
+
+      <!-- Input Pencarian -->
+      <div class="search-container" style="margin-bottom: 20px; text-align: right;">
+        <input type="text" id="searchInput" placeholder="Cari..." style="padding: 10px; width: 300px; border-radius: 5px; border: 1px solid #ccc;">
+      </div>
+
+      <div class="table-responsive">          
+        <table class="table" id="userTable">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama Pelanggan</th>
+              <th>Email</th>
+              <th>Kontak</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for users in users %}
+              <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ users[1] }}</td>
+                <td>{{ users[2] }}</td>
+                <td>{{ users[3] }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Button for Exporting to Excel -->
+      <div class="export-btn-container" style="text-align:center; margin-top: 20px;">
+        <a href="{{ url_for('export_to_excel') }}" class="btn btn-success" style="padding:10px 20px; font-size:16px; background-color:#4CAF50; color:white; border-radius:5px;">Export to Excel</a>
+      </div>
+    </div>
+  </section>
+<script>
+    // Fungsi untuk filter pencarian
+    document.getElementById("searchInput").addEventListener("keyup", function() {
+      let input = this.value.toLowerCase();
+      let table = document.getElementById("userTable");
+      let rows = table.getElementsByTagName("tr");
+
+      // Loop melalui setiap baris tabel
+      for (let i = 1; i < rows.length; i++) {
+        let cells = rows[i].getElementsByTagName("td");
+        let found = false;
+
+        // Loop melalui setiap kolom pada baris
+        for (let j = 0; j < cells.length; j++) {
+          if (cells[j]) {
+            let text = cells[j].textContent || cells[j].innerText;
+            if (text.toLowerCase().indexOf(input) > -1) {
+              found = true;
+              break;
+            }
+          }
+        }
+
+        // Sembunyikan atau tampilkan baris sesuai hasil pencarian
+        rows[i].style.display = found ? "" : "none";
+      }
+    });
+
+    // Sidebar toggle functionality
+    let sidebar = document.querySelector(".sidebar");
+    let sidebarBtn = document.querySelector(".sidebarBtn");
+    sidebarBtn.onclick = function() {
+      sidebar.classList.toggle("active");
+      if(sidebar.classList.contains("active")){
+        sidebarBtn.classList.replace("bx-menu" ,"bx-menu-alt-right");
+      }else {
+        sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+      }
+    }
+  </script>
+  
+</body>
+</html>

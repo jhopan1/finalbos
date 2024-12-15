@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard Admin Pekerja</title>
+  <link href="{{ url_for('static', filename='/img/log.png') }}" rel="icon">
+  <link rel="stylesheet" href="../../static/style_admin.css">
+  <link rel="stylesheet" href="../../static/style_crud.css">
+  <link href='https://unpkg.com/boxicons@2.0.7/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <div class="sidebar">
+    <div class="logo-details">
+      <img class='logo' src="../../static/img/Logo_Clean_YED_1X1.png">
+      <span class="logo_name">Admin</span>
+    </div>
+    <ul class="nav-links">
+      <li>
+        <a href="/admindashboard">
+          <i class='bx bx-grid-alt'></i>
+          <span class="links_name">Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a href="/adminuser">
+          <i class='bx bx-box'></i>
+          <span class="links_name">User</span>
+        </a>
+      </li>
+      <li>
+        <a href="/adminpekerja" class="active">
+          <i class='bx bx-list-ul'></i>
+          <span class="links_name">Pekerja</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+  <section class="home-section">
+    <nav>
+      <div class="sidebar-button">
+        <i class='bx bx-menu sidebarBtn'></i>
+        <span class="dashboard">Pekerja</span>
+      </div>
+      <div class="logout-button" style="float: right;">
+        <a href="{{ url_for('logout_admin') }}" class="btn btn-danger">Logout</a>
+      </div>
+    </nav>
+
+    <div class="home-content"></div>
+    <div class="container">
+      <h2>Data Pekerja</h2>
+      <!-- Input Pencarian -->
+      <div class="search-container" style="margin-bottom: 20px; text-align: right;">
+        <input type="text" id="searchInput" placeholder="Cari..." style="padding: 10px; width: 300px; border-radius: 5px; border: 1px solid #ccc;">
+      </div>
+      
+      <div class="table-responsive">
+        <table class="table" id="workerTable">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama</th>
+              <th>Kontak</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for worker in pekerja %}
+              <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ worker[1] }}</td>
+                <td>{{ worker[2] }}</td>
+                <td>
+                  <button class="btn btn-warning" onclick="editWorker({{ worker[0] }}, '{{ worker[1] }}', '{{ worker[2] }}')">Edit</button>
+                  <button class="btn btn-danger" onclick="deleteWorker({{ worker[0] }})">Hapus</button>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <button class="btn btn-primary" data-toggle="modal" data-target="#addWorkerModal">Tambah Pekerja</button>
+    </div>
+
+    <!-- Modal Tambah -->
+    <div id="addWorkerModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Tambah Pekerja</h4>
+          </div>
+          <div class="modal-body">
+            <form id="addWorkerForm" method="POST" action="/add_worker">
+              <div class="form-group">
+                <label>Nama:</label>
+                <input type="text" name="nama" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label>Kontak:</label>
+                <input type="text" name="kontak" class="form-control" required>
+              </div>
+              <button type="submit" class="btn btn-success">Tambah</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Edit -->
+    <div id="editWorkerModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h4 class="modal-title">Edit Pekerja</h4>
+          </div>
+          <div class="modal-body">
+            <form id="editWorkerForm" method="POST" action="/edit_worker">
+              <input type="hidden" name="id" id="editWorkerId">
+              <div class="form-group">
+                <label>Nama:</label>
+                <input type="text" name="nama" id="editWorkerNama" class="form-control" required>
+              </div>
+              <div class="form-group">
+                <label>Kontak:</label>
+                <input type="text" name="kontak" id="editWorkerKontak" class="form-control" required>
+              </div>
+              <button type="submit" class="btn btn-success">Simpan</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="../../static/script_crud.js"></script>
+  <script>
+    // Fungsi untuk filter pencarian
+    document.getElementById("searchInput").addEventListener("keyup", function() {
+      let input = this.value.toLowerCase();
+      let table = document.getElementById("workerTable");
+      let rows = table.getElementsByTagName("tr");
+
+      // Loop melalui setiap baris tabel
+      for (let i = 1; i < rows.length; i++) {
+        let cells = rows[i].getElementsByTagName("td");
+        let found = false;
+
+        // Loop melalui setiap kolom pada baris
+        for (let j = 0; j < cells.length; j++) {
+          if (cells[j]) {
+            let text = cells[j].textContent || cells[j].innerText;
+            if (text.toLowerCase().indexOf(input) > -1) {
+              found = true;
+              break;
+            }
+          }
+        }
+
+        // Sembunyikan atau tampilkan baris sesuai hasil pencarian
+        rows[i].style.display = found ? "" : "none";
+      }
+    });
+
+    // Sidebar toggle functionality
+    let sidebar = document.querySelector(".sidebar");
+    let sidebarBtn = document.querySelector(".sidebarBtn");
+    sidebarBtn.onclick = function() {
+      sidebar.classList.toggle("active");
+      if(sidebar.classList.contains("active")){
+        sidebarBtn.classList.replace("bx-menu" ,"bx-menu-alt-right");
+      }else {
+        sidebarBtn.classList.replace("bx-menu-alt-right", "bx-menu");
+      }
+    }
+  </script>
+</body>
+</html>

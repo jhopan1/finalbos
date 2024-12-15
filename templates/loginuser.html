@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html class="head_homeloginuser" lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Login & Registration Form</title>
+  <link href="{{ url_for('static', filename='/img/log.png') }}" rel="icon">
+  <!---Custom CSS File--->
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="body_homeloginsignup">
+  <div class="container">
+    <input type="checkbox" id="check">
+    <div class="login form">
+      <header class="header_login">Login</header>
+      <form action="/login" method="POST">
+        <input type="email" placeholder="Enter your email" name="email" required>
+        <input type="password" placeholder="Enter your password" name="password" required>
+        <a href="#">Forgot password?</a>
+        <input type="submit" class="button" value="Login">
+      </form>
+      <div>
+        <span>Don't have an account?
+          <a href="{{ url_for('register') }}">Signup</a>
+        </span>
+      </div>
+      {% with messages = get_flashed_messages() %}
+        {% if messages %}
+          <ul>
+            {% for message in messages %}
+              <li>{{ message }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      {% endwith %}
+    </div>
+  </div>
+</body>
+</html>
