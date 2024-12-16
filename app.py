@@ -11,9 +11,9 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 # MySQL configuration
 conn = connector.connect(
-    user="finalbos",
-    password="Finalbos1",
-    host="finalbos.mysql.database.azure.com",
+    user="finalyy",
+    password="Finalyy1",
+    host="finalyy.mysql.database.azure.com",
     port=3306,
     database="komputasi"
 )
